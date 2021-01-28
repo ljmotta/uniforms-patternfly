@@ -24,7 +24,7 @@ export default function AutoField(originalProps: AutoFieldProps) {
   const { allowedValues, checkboxes, fieldType } = props;
   let { component } = props;
 
-  if (component === undefined) {
+  if (!component) {
     if (allowedValues) {
       if (checkboxes && fieldType !== Array) {
         component = RadioField;
@@ -56,8 +56,8 @@ export default function AutoField(originalProps: AutoFieldProps) {
       invariant(component, 'Unsupported field type: %s', fieldType);
     }
   }
-  
-  return 'options' in component && component.options?.kind === 'leaf'
+
+  return component && 'options' in component && component.options?.kind === 'leaf'
     ? createElement(component.Component, props)
-    : createElement(component, originalProps);;
+    : createElement(component!, originalProps);
 }

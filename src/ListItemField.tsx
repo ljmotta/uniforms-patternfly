@@ -1,5 +1,5 @@
 import React, { Children, ReactNode } from 'react';
-import { joinName } from 'uniforms/es5';
+import { connectField, joinName } from 'uniforms/es5';
 
 import AutoField from './AutoField';
 
@@ -11,7 +11,7 @@ export type ListItemFieldProps = {
   wrapperCol?: any;
 };
 
-export default function ListItemField(props: ListItemFieldProps) {
+function ListItemField(props: ListItemFieldProps) {
   return (
     <div style={{ marginBottom: '1rem'}}>
       {props.children ? (
@@ -27,3 +27,5 @@ export default function ListItemField(props: ListItemFieldProps) {
     </div>
   );
 }
+
+export default connectField(ListItemField, { initialValue: false });

@@ -27,4 +27,4 @@ Error.defaultProps = {
   },
 };
 
-export default connectField(Error, { initialValue: false });
+export default connectField(Error, { initialValue: false, kind: 'leaf' });

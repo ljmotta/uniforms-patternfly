@@ -1,27 +1,29 @@
-import React, { Ref } from 'react';
-import { TextInput, TextInputProps } from '@patternfly/react-core';
-import { connectField } from 'uniforms/es5';
+import React from 'react';
+import { TextInput } from '@patternfly/react-core';
+import { connectField, FieldProps } from 'uniforms/es5';
 
 import wrapField from './wrapField';
 
-export type NumFieldProps = {
-  id: string;
-  decimal?: boolean;
-  inputRef?: Ref<HTMLInputElement>;
-  onChange: (value?: number) => void;
-  disabled: boolean;
-  value?: number;
-  error?: boolean;
-} & Omit<TextInputProps, 'isDisabled'>;
+export type NumFieldProps = FieldProps<
+  number,
+  HTMLDivElement,
+  {
+    decimal?: boolean;
+    inputRef?: React.RefObject<HTMLInputElement>;
+    max?: number;
+    min?: number;
+  }
+>;
 
 const Num = (props: NumFieldProps) => {
-
-  const onChange = (value, event) => {
+  const onChange = (
+    value: string,
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
     const parse = props.decimal ? parseFloat : parseInt;
-    const v = parse(event.target.value);
-    // @ts-ignore
+    const v = parse((event.target as any).value);
     props.onChange(isNaN(v) ? undefined : v);
-  }
+  };
 
   return wrapField(
     props,
@@ -39,6 +41,6 @@ const Num = (props: NumFieldProps) => {
       value={props.value ?? ''}
     />
   );
-}
+};
 
-export default connectField(Num);
+export default connectField(Num, { kind: 'leaf' });

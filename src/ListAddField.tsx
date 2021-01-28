@@ -1,16 +1,20 @@
 import React from 'react';
 import cloneDeep from 'lodash/cloneDeep';
-import { Button, ButtonProps } from '@patternfly/react-core';
+import { Button, ButtonProps, ButtonVariant } from '@patternfly/react-core';
 import { PlusCircleIcon } from '@patternfly/react-icons';
-import { useField, FieldProps, filterDOMProps, joinName } from 'uniforms/es5';
+import {
+  useField,
+  filterDOMProps,
+  joinName,
+  connectField,
+  HTMLFieldProps,
+} from 'uniforms/es5';
 
-export type ListAddFieldProps = {
-  initialCount?: number;
-  parent?: any;
-  name: string;
-  disabled?: boolean;
-  value?: unknown;
-} & ButtonProps;
+export type ListAddFieldProps = HTMLFieldProps<
+  unknown,
+  ButtonProps,
+  { initialCount?: number }
+>;
 
 function ListAdd({
   disabled = false,
@@ -23,7 +27,7 @@ function ListAdd({
   const parent = useField<{ maxCount?: number }, unknown[]>(
     parentName,
     {},
-    { absoluteName: true },
+    { absoluteName: true }
   )[0];
 
   const limitNotReached =
@@ -31,19 +35,19 @@ function ListAdd({
 
   return (
     <Button
-      variant="plain"
-      style={{ paddingLeft: '0', paddingRight: '0'}}
+      variant={ButtonVariant.plain}
+      style={{ paddingLeft: '0', paddingRight: '0' }}
       disabled={!limitNotReached}
+      // @ts-ignore
       onClick={() => {
         !disabled &&
-        limitNotReached &&
-        parent.onChange(parent.value!.concat([cloneDeep(value)]));
+          limitNotReached &&
+          parent.onChange(parent.value!.concat([cloneDeep(value)]));
       }}
+      icon={<PlusCircleIcon color="#0088ce" />}
       {...filterDOMProps(props)}
-    >
-      <PlusCircleIcon color="#0088ce" />
-    </Button>
+    />
   );
 }
 
-export default ListAdd;
+export default connectField(ListAdd, { initialValue: false, kind: 'leaf' });
