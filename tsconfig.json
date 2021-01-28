@@ -1,19 +1,19 @@
 {
   "compilerOptions": {
+    "lib": ["es6", "dom", "es2018.promise"],
     "baseUrl": ".",
     "rootDir": "./src/",
     "outDir": "./dist/",
-    "composite": true,
     "declaration": true,
     "esModuleInterop": true,
     "importHelpers": true,
     "jsx": "react",
     "moduleResolution": "node",
-    "noImplicitAny": false,
+    "skipLibCheck": true,
     "paths": {
       "uniforms": ["/node_modules/uniforms/es5"],
     },
-    "strict": false
+    "strict": true
   },
   "exclude": [
     "node_modules",
