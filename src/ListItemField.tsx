@@ -1,5 +1,5 @@
 import React, { Children, ReactNode } from 'react';
-import { joinName } from 'uniforms/es5';
+import { connectField, joinName } from 'uniforms/es5';
 
 import AutoField from './AutoField';
 

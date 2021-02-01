@@ -8,8 +8,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc --build --incremental",
-    "buildProd": "tsc --build",
+    "build": "rm -rf dist/ && tsc --build",
+    "build:prod": "yarn run lint && yarn run test && yarn run build",
     "watch": "tsc --watch --incremental",
     "clean": "rimraf dist coverage tsconfig.tsbuildinfo && tsc",
     "coverage": "jest --coverage",

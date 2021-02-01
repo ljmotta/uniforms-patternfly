@@ -17,21 +17,18 @@ function SubmitField({
   const { error, state } = useForm();
 
   return (
-    // @ts-ignore
-    <div {...filterDOMProps(props)}>
-      <Button
-        isDisabled={
-          disabled === undefined ? !!(error || state.disabled) : disabled
-        }
-        type="submit"
-        ref={inputRef}
-        variant="primary"
-      >
-        {value}
-      </Button>
-    </div>
-  )
-} 
+    <Button
+      isDisabled={
+        disabled === undefined ? !!(error || state.disabled) : disabled
+      }
+      type="submit"
+      ref={inputRef}
+      variant="primary"
+    >
+      {value}
+    </Button>
+  );
+}
 
 SubmitField.defaultProps = { value: 'Submit' };
 

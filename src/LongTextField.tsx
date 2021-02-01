@@ -1,13 +1,37 @@
-import React, { Ref } from 'react';
+import React from 'react';
 import { TextArea, TextAreaProps } from '@patternfly/react-core';
-import { connectField, filterDOMProps } from 'uniforms/es5';
+import { connectField, filterDOMProps, HTMLFieldProps } from 'uniforms/es5';
 
-export type LongTextFieldProps = {
-  onChange: (value: string, event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  inputRef: Ref<HTMLInputElement>;
-  value?: string;
-  prefix?: string;
-} & TextAreaProps;
+export type LongTextFieldProps = HTMLFieldProps<
+  string,
+  TextAreaProps,
+  { inputRef: React.RefObject<HTMLInputElement> & React.RefObject<HTMLDivElement> }
+>;
+
+// These props are provided by useField directly.
+// 'changed',
+//   'error',
+//   'errorMessage',
+//   'field',
+//   'fieldType',
+//   'fields',
+//   'initialCount',
+//   'name',
+//   'onChange',
+//   'transform',
+//   'value',
+//
+//   // These props are provided by useField through context.state.
+//   'disabled',
+//   'label',
+//   'placeholder',
+//   'showInlineError',
+//
+//   // This is used by AutoField.
+//   'component',
+//
+//   // These is used by AutoField and bridges.
+//   'allowedValues',
 
 const LongText = ({
   disabled,
@@ -19,7 +43,7 @@ const LongText = ({
   placeholder,
   value,
   ...props
-}) => (
+}: LongTextFieldProps) => (
   <div {...filterDOMProps(props)}>
     {label && <label htmlFor={id}>{label}</label>}
     <TextArea
@@ -27,7 +51,6 @@ const LongText = ({
       disabled={disabled}
       name={name}
       aria-label={name}
-      // @ts-ignore
       onChange={(value, event) => onChange(event.target.value)}
       placeholder={placeholder}
       ref={inputRef}
